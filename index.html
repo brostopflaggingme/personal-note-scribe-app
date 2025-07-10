@@ -1,24 +1,94 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>personal-note-scribe-app</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Notes App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">
+                    <i class="fas fa-sticky-note"></i>
+                    Personal Notes
+                </h1>
+                <div class="auth-buttons">
+                    <button id="loginBtn" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Login
+                    </button>
+                    <button id="logoutBtn" class="btn btn-secondary hidden">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </header>
 
-    <meta property="og:title" content="personal-note-scribe-app" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-content">
+                    <i class="fas fa-book-open welcome-icon"></i>
+                    <h2>Welcome to Personal Notes</h2>
+                    <p>Your secure space for thoughts, ideas, and memories</p>
+                    <p class="welcome-subtitle">Please log in to access your notes</p>
+                </div>
+            </div>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+            <!-- App Content -->
+            <div id="appContent" class="app-content hidden">
+                <!-- Note Form -->
+                <div class="note-form-container">
+                    <form id="noteForm" class="note-form">
+                        <div class="form-group">
+                            <label for="noteTitle">
+                                <i class="fas fa-heading"></i>
+                                Note Title
+                            </label>
+                            <input type="text" id="noteTitle" name="title" placeholder="Enter note title..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="noteContent">
+                                <i class="fas fa-align-left"></i>
+                                Note Content
+                            </label>
+                            <textarea id="noteContent" name="content" placeholder="Write your note here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-plus"></i>
+                            Add Note
+                        </button>
+                    </form>
+                </div>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+                <!-- Notes List -->
+                <div class="notes-container">
+                    <div class="notes-header">
+                        <h2>
+                            <i class="fas fa-list"></i>
+                            Your Notes
+                        </h2>
+                        <span id="notesCount" class="notes-count">0 notes</span>
+                    </div>
+                    <ul id="notesList" class="notes-list"></ul>
+                    <div id="emptyState" class="empty-state">
+                        <i class="fas fa-clipboard"></i>
+                        <h3>No notes yet</h3>
+                        <p>Create your first note to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
