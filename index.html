@@ -19,10 +19,6 @@
                     Personal Notes
                 </h1>
                 <div class="auth-buttons">
-                    <button id="loginBtn" class="btn btn-primary">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Login
-                    </button>
                     <button id="logoutBtn" class="btn btn-secondary hidden">
                         <i class="fas fa-sign-out-alt"></i>
                         Logout
@@ -33,13 +29,41 @@
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Welcome Screen -->
-            <div id="welcomeScreen" class="welcome-screen">
+            <!-- Login Screen -->
+            <div id="loginScreen" class="welcome-screen">
                 <div class="welcome-content">
                     <i class="fas fa-book-open welcome-icon"></i>
                     <h2>Welcome to Personal Notes</h2>
                     <p>Your secure space for thoughts, ideas, and memories</p>
-                    <p class="welcome-subtitle">Please log in to access your notes</p>
+                    
+                    <!-- Login Form -->
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i>
+                                Username
+                            </label>
+                            <input type="text" id="username" name="username" placeholder="Enter your username..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <input type="password" id="password" name="password" placeholder="Enter your password..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i>
+                                Email (Optional)
+                            </label>
+                            <input type="email" id="email" name="email" placeholder="Enter your email...">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Login
+                        </button>
+                    </form>
                 </div>
             </div>
 

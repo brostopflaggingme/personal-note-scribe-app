@@ -1,10 +1,10 @@
 
 // DOM Elements
-const loginBtn = document.getElementById('loginBtn');
+const loginForm = document.getElementById('loginForm');
 const logoutBtn = document.getElementById('logoutBtn');
 const noteForm = document.getElementById('noteForm');
 const notesList = document.getElementById('notesList');
-const welcomeScreen = document.getElementById('welcomeScreen');
+const loginScreen = document.getElementById('loginScreen');
 const appContent = document.getElementById('appContent');
 const notesCount = document.getElementById('notesCount');
 const emptyState = document.getElementById('emptyState');
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Setup Event Listeners
 function setupEventListeners() {
-    loginBtn.addEventListener('click', handleLogin);
+    loginForm.addEventListener('submit', handleLogin);
     logoutBtn.addEventListener('click', handleLogout);
     noteForm.addEventListener('submit', handleNoteSubmit);
 }
@@ -44,24 +44,40 @@ async function checkUserAuthentication() {
             await loadNotes();
         } else {
             console.log('User is not logged in');
-            showWelcomeScreen();
+            showLoginScreen();
         }
     } catch (error) {
         console.error('Error checking authentication:', error);
-        showWelcomeScreen();
+        showLoginScreen();
     }
 }
 
-async function handleLogin() {
+async function handleLogin(event) {
+    event.preventDefault();
+    
     try {
         console.log('Attempting to log in...');
+        
+        const formData = new FormData(event.target);
+        const loginData = {
+            username: formData.get('username').trim(),
+            password: formData.get('password').trim(),
+            email: formData.get('email').trim()
+        };
+        
+        // Validate required fields
+        if (!loginData.username || !loginData.password) {
+            showNotification('Please fill in both username and password.', 'warning');
+            return;
+        }
         
         // Simulate login with lovable.auth.login()
         // In a real app, this would use the actual Lovable auth
         const mockUser = {
             id: 'user_' + Date.now(),
-            email: 'user@example.com',
-            name: 'Demo User'
+            username: loginData.username,
+            email: loginData.email || 'user@example.com',
+            name: loginData.username
         };
         
         currentUser = mockUser;
@@ -72,7 +88,10 @@ async function handleLogin() {
         await loadNotes();
         
         // Show success message
-        showNotification('Welcome back! You are now logged in.', 'success');
+        showNotification(`Welcome back, ${currentUser.username}! You are now logged in.`, 'success');
+        
+        // Reset login form
+        loginForm.reset();
         
     } catch (error) {
         console.error('Login failed:', error);
@@ -85,12 +104,13 @@ async function handleLogout() {
         console.log('Attempting to log out...');
         
         // Simulate logout with lovable.auth.logout()
+        const username = currentUser?.username || 'User';
         currentUser = null;
         localStorage.removeItem('currentUser');
         localStorage.removeItem('notes_' + (currentUser?.id || ''));
         
         console.log('Logout successful');
-        showWelcomeScreen();
+        showLoginScreen();
         
         // Clear form and notes
         noteForm.reset();
@@ -98,7 +118,7 @@ async function handleLogout() {
         renderNotes();
         
         // Show success message
-        showNotification('You have been logged out successfully.', 'success');
+        showNotification(`Goodbye, ${username}! You have been logged out successfully.`, 'success');
         
     } catch (error) {
         console.error('Logout failed:', error);
@@ -107,17 +127,15 @@ async function handleLogout() {
 }
 
 // UI Functions
-function showWelcomeScreen() {
-    welcomeScreen.classList.remove('hidden');
+function showLoginScreen() {
+    loginScreen.classList.remove('hidden');
     appContent.classList.add('hidden');
-    loginBtn.classList.remove('hidden');
     logoutBtn.classList.add('hidden');
 }
 
 function showAppContent() {
-    welcomeScreen.classList.add('hidden');
+    loginScreen.classList.add('hidden');
     appContent.classList.remove('hidden');
-    loginBtn.classList.add('hidden');
     logoutBtn.classList.remove('hidden');
 }
 
